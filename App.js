@@ -1,21 +1,67 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Dashboard from './screens/Dashboard';
+import AddPlant from './screens/AddPlant';
+import { mainGreen, mainGrey, offWhite } from './utils/colors';
+import { AntDesign } from '@expo/vector-icons';
 
-export default function App() {
+// create status bar
+function MyStatusBar({ backgroundColor, ...props }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <StatusBar translucent barStyle="dark-content" backgroundColor={offWhite} {...props} />
+    </View>
+  )
+}
+
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Dashboard />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function AddPlantScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <AddPlant />
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyStatusBar />
+      <Tab.Navigator
+           screenOptions={({ route }) => ({
+            tabBarIcon: () => {
+              if (route.name === 'Home') {
+                return <AntDesign name="home" size={24} color="white" />;
+              } else if (route.name === 'Add plant') {
+                return <AntDesign name="pluscircle" size={24} color='white' />;
+              }
+    
+            },
+            })}
+            tabBarOptions={{
+              activeTintColor: 'white',
+              inactiveTintColor: mainGrey,
+              style: {
+                backgroundColor: mainGreen,
+                height: 50,
+              },
+            }}
+        >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Add plant" component={AddPlantScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
