@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {  View, StatusBar } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from './screens/Dashboard';
 import AddPlant from './screens/AddPlant';
@@ -16,6 +16,17 @@ function MyStatusBar({ backgroundColor, ...props }) {
     </View>
   )
 }
+
+// create my own theme
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: mainGreen,
+    backgroundColor: offWhite,
+    text: mainGrey,
+  },
+};
 
 function HomeScreen() {
   return (
@@ -37,7 +48,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <MyStatusBar />
       <Tab.Navigator
            screenOptions={({ route }) => ({

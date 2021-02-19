@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, FlatList, SafeAreaView, TouchableOpacity, ImageBackground } from 'react-native';
-import { lightGreen, mainGreen } from '../utils/colors';
+import { lightGreen, mainGreen, mainGrey, offWhite } from '../utils/colors';
 import {DATA} from '../utils/data';
 
 export default function PlantList() {
-    const Item = ({ title, image }) => (
-        <TouchableOpacity style={styles.item} style={{background: {image}}}>
-            <ImageBackground sourse={image} style={styles.image}>
+    const Item = ({ title, avatar }) => (
+        <TouchableOpacity style={styles.item}>
+            <ImageBackground source={avatar} style={styles.avatar}>
                 <Text style={styles.itemName}>
                     {title}
                 </Text>
@@ -15,8 +15,10 @@ export default function PlantList() {
       );
 
     const renderItem = ({ item }) => (
-        <Item title={item.title} image={item.image}/>
-      );
+        <Item title={item.title} avatar={item.avatar}/>
+    );
+
+    const numColumns = 2;
 
     return (
         <SafeAreaView style={styles.plantContainer}>
@@ -24,6 +26,7 @@ export default function PlantList() {
                 data={DATA}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
+                numColumns={numColumns}
             />
         </SafeAreaView>
     )
@@ -31,25 +34,30 @@ export default function PlantList() {
 
 const styles = StyleSheet.create({
     plantContainer: {
-        width: '100%',
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
     },
     item: {
-        backgroundColor: lightGreen,
         height: 150,
         width: '50%',
+        padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 15,
     },
     itemName: {
-        color: mainGreen,
+        backgroundColor: 'black',
+        padding: 2,
+        paddingHorizontal: 5,
+        color: 'white',
+        opacity: 1,
     },
-    image: {
-        width: 50,
-        height: 50
+    avatar: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+        alignItems: 'center',
+        height: '100%',
+        width: '100%',
+        opacity: 0.8,
     }
 })

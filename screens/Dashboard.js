@@ -9,10 +9,10 @@ export default function Dashboard() {
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>
-                    Dashboard
+                    My plants
                 </Text>
             </View>
-            <View style={styles.plantsListContainer}>
+            <View>
                 <PlantList />
             </View>
         </View>
@@ -24,29 +24,18 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: 'flex-start', 
         alignItems: 'flex-start',
-        paddingHorizontal: 20,
-        paddingVertical: 40,
+        paddingTop: 30,
         height: '100%',
         width: '100%',
         backgroundColor: offWhite,
     },
     titleContainer: {
         marginBottom: 10,
+        marginLeft: 20,
     },
     title: {
         color: mainGrey,
         fontSize: 30,
         fontWeight: 'bold',
     },
-    plantsListContainer: {
-        width: '100%',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
-    },
-    singlePlantContainer: {
-        width: '50%',
-        padding: 5,
-    }
 })
