@@ -1,22 +1,32 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { connect } from 'react-redux';
+import { receivePlants } from '../actions';
 import { mainGrey, offWhite } from '../utils/colors';
-import Plant from '../components/Plant';
 import PlantList from '../components/PlantList';
 
-export default function Dashboard() {
-    return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>
-                    My plants
-                </Text>
+class Dashboard extends React.Component {
+    componentDidMount() {
+        getPlants()
+            .then((plants) => {
+                this.props.dispatch(receivePlants(plants))
+            })
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>
+                        My plants
+                    </Text>
+                </View>
+                <View>
+                    <PlantList />
+                </View>
             </View>
-            <View>
-                <PlantList />
-            </View>
-        </View>
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -39,3 +49,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 })
+
+export default Dashboard;

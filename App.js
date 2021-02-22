@@ -1,11 +1,18 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+
+// redux imports
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducers';
+
 import {  View, StatusBar } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { enableScreens } from 'react-native-screens';
 import Dashboard from './screens/Dashboard';
 import AddPlant from './screens/AddPlant';
-import { mainGreen, mainGrey, offWhite } from './utils/colors';
+import { lightGrey, mainGreen, mainGrey, offWhite } from './utils/colors';
 import { AntDesign } from '@expo/vector-icons';
 
 // create status bar
@@ -48,31 +55,33 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer theme={MyTheme}>
-      <MyStatusBar />
-      <Tab.Navigator
-           screenOptions={({ route }) => ({
-            tabBarIcon: () => {
-              if (route.name === 'Home') {
-                return <AntDesign name="home" size={24} color="white" />;
-              } else if (route.name === 'Add plant') {
-                return <AntDesign name="pluscircle" size={24} color='white' />;
-              }
-    
-            },
-            })}
-            tabBarOptions={{
-              activeTintColor: 'white',
-              inactiveTintColor: mainGrey,
-              style: {
-                backgroundColor: mainGreen,
-                height: 50,
+    <Provider store={createStore(reducer)}>
+      <NavigationContainer theme={MyTheme}>
+        <MyStatusBar />
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: () => {
+                if (route.name === 'Home') {
+                  return <AntDesign name="home" size={24} color="white" />;
+                } else if (route.name === 'Add plant') {
+                  return <AntDesign name="pluscircle" size={24} color='white' />;
+                }
+      
               },
-            }}
-        >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Add plant" component={AddPlantScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              })}
+              tabBarOptions={{
+                activeTintColor: 'white',
+                inactiveTintColor: lightGrey,
+                style: {
+                  backgroundColor: mainGreen,
+                  height: 50,
+                },
+              }}
+          >
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Add plant" component={AddPlantScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }

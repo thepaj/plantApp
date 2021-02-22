@@ -3,21 +3,28 @@ import { StyleSheet, Text, FlatList, SafeAreaView, TouchableOpacity, ImageBackgr
 import { lightGreen, mainGreen, mainGrey, offWhite } from '../utils/colors';
 import {DATA} from '../utils/data';
 
-export default function PlantList() {
+export default function PlantList({ navigation }) {
+    // navigate to PlantDetail
+    function onPlantPress(title) {
+        navigation.navigate('PlantDetail', { title });
+    }
+
+    // creating item
     const Item = ({ title, avatar }) => (
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => onPlantPress(title)} >
             <ImageBackground source={avatar} style={styles.avatar}>
                 <Text style={styles.itemName}>
                     {title}
                 </Text>
             </ImageBackground>
         </TouchableOpacity>
-      );
+    );
 
     const renderItem = ({ item }) => (
         <Item title={item.title} avatar={item.avatar}/>
     );
 
+    // setting column flatlist number
     const numColumns = 2;
 
     return (
